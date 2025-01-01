@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Fonte Cartoon (Google Fonts) para o título -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Fonte mais moderna para o restante do texto -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>Conselhos da Nikki</title>
+
+    <style>
+      /* RESET BÁSICO */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* BODY COM GRADIENTE, FONTE NUNITO */
+      body {
+        font-family: "Nunito", sans-serif;
+        min-height: 100vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+
+        /* Gradiente sutil do topo para o centro */
+        background: linear-gradient(
+          135deg,
+          #ffe5ec 0%,
+          /* Rosa bem clarinho */ #ffcce0 50%,
+          #ffb3d1 100%
+        );
+        padding: 20px;
+      }
+
+      /* TÍTULO EM FONTE PANGOLIN, CENTRALIZADO */
+      h1 {
+        margin: 20px 0;
+        color: #d63384; /* Rosa vivo */
+        font-family: "Pangolin", cursive;
+        font-size: 2rem;
+        text-align: center;
+      }
+
+      /* CONTAINER PRINCIPAL COM EFEITO DE CARD */
+      .container {
+        width: 95%;
+        max-width: 600px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+
+        /* Animação sutil ao hover (para desktop) */
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .container:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 7px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      /* ESTILOS GERAIS DE BUTTON, COM TRANSIÇÃO E SOMBRA SUTIL */
+      button {
+        background-color: #ff73ab; /* Rosa pastel mais vivo */
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #fff;
+        margin: 10px 5px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(255, 115, 171, 0.2);
+      }
+
+      button:hover {
+        background-color: #ff5e9c;
+        box-shadow: 0 4px 12px rgba(255, 94, 156, 0.3);
+      }
+
+      /* CAMPOS DE TEXTO */
+      input[type="text"],
+      input[type="password"],
+      textarea {
+        width: 90%;
+        max-width: 500px;
+        padding: 12px;
+        margin: 8px 0;
+        border: 2px solid #ffabd4;
+        border-radius: 8px;
+        font-size: 1rem;
+        background-color: #fff;
+        text-align: center;
+        transition: border 0.3s ease;
+      }
+
+      input:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #ff73ab; /* muda a cor ao focar */
+      }
+
+      label {
+        display: block;
+        margin-top: 10px;
+        font-weight: 600;
+        text-align: center;
+        color: #d63384; /* Combina com título */
+      }
+
+      textarea {
+        resize: none;
+      }
+
+      /* ITENS DA LISTA DE HISTÓRIAS */
+      .story-item {
+        border-bottom: 1px solid #ffe0ea;
+        padding: 10px 0;
+        text-align: left;
+      }
+
+      .story-item:last-child {
+        border: none;
+      }
+
+      .story-name {
+        font-weight: 600;
+        color: #d63384;
+        margin-bottom: 2px;
+      }
+
+      .story-date {
+        font-size: 0.85rem;
+        color: #666;
+      }
+
+      .story-preview {
+        margin-top: 5px;
+        color: #444;
+        font-size: 0.95rem;
+      }
+
+      .story-actions {
+        margin-top: 5px;
+      }
+
+      /* CARD ESPECÍFICO PARA ACONSELHAMENTO */
+      .card-aconselhamento {
+        border: 2px solid #ffe0ea;
+        border-radius: 10px;
+        background-color: #fffdfa;
+        padding: 15px;
+        margin-top: 15px;
+      }
+
+      h2,
+      h3,
+      h4 {
+        color: #d63384;
+      }
+
+      /* BOTÃO DIFERENCIADO PARA SECUNDÁRIO (se quiser) */
+      .btn-secondary {
+        background-color: #fff;
+        color: #d63384;
+        border: 2px solid #d63384;
+        transition: all 0.3s ease;
+      }
+
+      .btn-secondary:hover {
+        background-color: #d63384;
+        color: #fff;
+      }
+
+      /* RESPONSIVIDADE */
+      @media (min-width: 768px) {
+        h1 {
+          font-size: 2.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Conselhos da Nikki</h1>
+
+    <!-- CONTAINER PRINCIPAL DE LOGIN -->
+    <div class="container" id="login-container">
+      <button id="btn-pedir-conselho">Pedir um conselho</button>
+      <button id="btn-sou-nikki">Sou a Nikki</button>
+
+      <!-- FORMULÁRIO PARA QUEM PEDE CONSELHO -->
+      <div id="conselho-form" style="display: none; margin-top: 20px">
+        <label for="nome-conselho">Insira seu nome:</label>
+        <input type="text" id="nome-conselho" placeholder="Digite seu nome" />
+        <button id="btn-confirmar-nome">Confirmar</button>
+        <!-- Botão para voltar ao Login (visitante) -->
+        <button class="btn-secondary" id="btn-voltar-visitante">
+          Voltar ao Login
+        </button>
+      </div>
+
+      <!-- FORMULÁRIO PARA HISTÓRIA -->
+      <div id="historia-form" style="display: none; margin-top: 20px">
+        <label for="historia">Conte sua história:</label>
+        <textarea
+          id="historia"
+          rows="5"
+          placeholder="Digite aqui..."
+        ></textarea>
+        <button id="btn-enviar-historia">Enviar</button>
+        <!-- Botão também para voltar ao login (caso a pessoa desista) -->
+        <button class="btn-secondary" id="btn-voltar-visitante-2">
+          Voltar ao Login
+        </button>
+      </div>
+
+      <!-- FORMULÁRIO DE LOGIN PARA NIKKI -->
+      <div id="nikki-form" style="display: none; margin-top: 20px">
+        <label for="senha-nikki">Insira a senha:</label>
+        <input type="password" id="senha-nikki" placeholder="Digite a senha" />
+        <button id="btn-confirmar-nikki">Confirmar</button>
+
+        <!-- Botão para voltar ao Login (Nikki) -->
+        <button class="btn-secondary" id="btn-voltar-nikki">
+          Voltar ao Login
+        </button>
+
+        <p
+          id="erro-nikki"
+          style="color: red; display: none; font-weight: bold; margin-top: 10px"
+        >
+          VOCÊ ESTÀ TENTANDO SE PASSAR PELA NIKKI??
+        </p>
+      </div>
+    </div>
+
+    <!-- LISTA DE HISTÓRIAS (APENAS PARA NIKKI) -->
+    <div class="container" id="lista-historias-container" style="display: none">
+      <h2>Histórias Recebidas</h2>
+      <h3>Não Aconselhadas</h3>
+      <div id="lista-nao-aconselhadas"></div>
+      <hr />
+      <h3>Aconselhadas</h3>
+      <div id="lista-ja-aconselhadas"></div>
+      <button id="btn-sair">Sair</button>
+    </div>
+
+    <!-- CARD PARA A NIKKI ACONSELHAR UMA HISTÓRIA ESPECÍFICA -->
+    <div
+      class="container"
+      id="nikki-aconselhar-container"
+      style="display: none"
+    >
+      <div class="card-aconselhamento" id="card-aconselhamento">
+        <!-- Conteúdo preenchido via JS -->
+      </div>
+    </div>
+
+    <!-- LISTA DE HISTÓRIAS PARA O VISITANTE (PARA VER SE RECEBEU RESPOSTA) -->
+    <div
+      class="container"
+      id="visitante-historias-container"
+      style="display: none"
+    >
+      <h2>Suas Histórias</h2>
+      <div id="visitante-historias"></div>
+      <button id="btn-pedir-novo-conselho">Pedir um novo conselho</button>
+    </div>
+
+    <script>
+      // -------------------------------------------------
+      // SELEÇÃO DE ELEMENTOS
+      // -------------------------------------------------
+      // Botões de escolha inicial
+      const btnPedirConselho = document.getElementById("btn-pedir-conselho");
+      const btnSouNikki = document.getElementById("btn-sou-nikki");
+
+      // Formulários de visitante
+      const conselhoForm = document.getElementById("conselho-form");
+      const historiaForm = document.getElementById("historia-form");
+      const nomeConselhoInput = document.getElementById("nome-conselho");
+      const historiaTextarea = document.getElementById("historia");
+      const btnConfirmarNome = document.getElementById("btn-confirmar-nome");
+      const btnEnviarHistoria = document.getElementById("btn-enviar-historia");
+      const btnVoltarVisitante = document.getElementById(
+        "btn-voltar-visitante"
+      );
+      const btnVoltarVisitante2 = document.getElementById(
+        "btn-voltar-visitante-2"
+      );
+
+      // Formulário de Nikki
+      const nikkiForm = document.getElementById("nikki-form");
+      const senhaNikkiInput = document.getElementById("senha-nikki");
+      const btnConfirmarNikki = document.getElementById("btn-confirmar-nikki");
+      const btnVoltarNikki = document.getElementById("btn-voltar-nikki");
+      const erroNikki = document.getElementById("erro-nikki");
+
+      // Containers de listas
+      const loginContainer = document.getElementById("login-container");
+      const listaHistoriasContainer = document.getElementById(
+        "lista-historias-container"
+      );
+      const listaNaoAconselhadas = document.getElementById(
+        "lista-nao-aconselhadas"
+      );
+      const listaJaAconselhadas = document.getElementById(
+        "lista-ja-aconselhadas"
+      );
+      const btnSair = document.getElementById("btn-sair");
+
+      // Container para Nikki aconselhar uma história específica
+      const nikkiAconselharContainer = document.getElementById(
+        "nikki-aconselhar-container"
+      );
+      const cardAconselhamento = document.getElementById("card-aconselhamento");
+
+      // Container para o visitante ver se recebeu a resposta
+      const visitanteHistoriasContainer = document.getElementById(
+        "visitante-historias-container"
+      );
+      const visitanteHistorias = document.getElementById("visitante-historias");
+      const btnPedirNovoConselho = document.getElementById(
+        "btn-pedir-novo-conselho"
+      );
+
+      // -------------------------------------------------
+      // VARIÁVEIS DE CONTROLE
+      // -------------------------------------------------
+      let currentVisitorName = ""; // Para saber qual visitante está logado
+
+      // -------------------------------------------------
+      // FUNÇÕES DE LOCAL STORAGE
+      // -------------------------------------------------
+      function getHistorias() {
+        return JSON.parse(localStorage.getItem("historias")) || [];
+      }
+
+      function salvarHistorias(historias) {
+        localStorage.setItem("historias", JSON.stringify(historias));
+      }
+
+      // -------------------------------------------------
+      // FUNÇÕES PARA VISITANTE
+      // -------------------------------------------------
+
+      function visitorLogin(nome) {
+        currentVisitorName = nome;
+        // Verificar se já existe alguma história para esse nome
+        const historias = getHistorias();
+        const historiasDoUsuario = historias.filter((h) => h.nome === nome);
+
+        if (historiasDoUsuario.length > 0) {
+          // Já existe história(s), mostrar a lista com possíveis respostas
+          mostrarHistoriasVisitante(nome);
+        } else {
+          // Não tem história ainda, vai direto escrever
+          conselhoForm.style.display = "none";
+          historiaForm.style.display = "block";
+        }
+      }
+
+      function mostrarHistoriasVisitante(nome) {
+        // Esconder formulários
+        conselhoForm.style.display = "none";
+        historiaForm.style.display = "none";
+
+        // Exibir container de histórias do visitante
+        visitanteHistoriasContainer.style.display = "block";
+        visitanteHistorias.innerHTML = "";
+
+        const historias = getHistorias();
+        const historiasDoUsuario = historias.filter((h) => h.nome === nome);
+
+        if (historiasDoUsuario.length === 0) {
+          visitanteHistorias.innerHTML =
+            "<p>Você ainda não pediu nenhum conselho.</p>";
+          return;
+        }
+
+        historiasDoUsuario.forEach((hist) => {
+          const divItem = document.createElement("div");
+          divItem.classList.add("story-item");
+
+          const nameEl = document.createElement("div");
+          nameEl.classList.add("story-name");
+          nameEl.textContent = "Sua História";
+
+          const dateEl = document.createElement("div");
+          dateEl.classList.add("story-date");
+          dateEl.textContent = `Enviada em: ${hist.dataEhHora}`;
+
+          const previewEl = document.createElement("div");
+          previewEl.classList.add("story-preview");
+          previewEl.textContent = hist.historia;
+
+          let respostaEl = document.createElement("div");
+          respostaEl.style.marginTop = "5px";
+          if (hist.foiRespondido) {
+            respostaEl.innerHTML = `<strong>Conselho da Nikki:</strong> ${hist.resposta}`;
+          } else {
+            respostaEl.innerHTML = `<em>Ainda não respondido pela Nikki.</em>`;
+          }
+
+          divItem.appendChild(nameEl);
+          divItem.appendChild(dateEl);
+          divItem.appendChild(previewEl);
+          divItem.appendChild(respostaEl);
+
+          visitanteHistorias.appendChild(divItem);
+        });
+      }
+
+      // -------------------------------------------------
+      // FUNÇÕES PARA NIKKI
+      // -------------------------------------------------
+      function mostrarListaHistoriasNikki() {
+        const historias = getHistorias();
+
+        listaNaoAconselhadas.innerHTML = "";
+        listaJaAconselhadas.innerHTML = "";
+
+        const naoAconselhadas = historias.filter((h) => !h.foiRespondido);
+        const jaAconselhadas = historias.filter((h) => h.foiRespondido);
+
+        // Não aconselhadas
+        naoAconselhadas.forEach((hist) => {
+          const divItem = document.createElement("div");
+          divItem.classList.add("story-item");
+
+          const nameEl = document.createElement("div");
+          nameEl.classList.add("story-name");
+          nameEl.textContent = `${hist.nome}`;
+
+          const dateEl = document.createElement("div");
+          dateEl.classList.add("story-date");
+          dateEl.textContent = `Enviado em: ${hist.dataEhHora}`;
+
+          const previewEl = document.createElement("div");
+          previewEl.classList.add("story-preview");
+          const previewText =
+            hist.historia.length > 60
+              ? hist.historia.substring(0, 60) + "..."
+              : hist.historia;
+          previewEl.textContent = previewText;
+
+          const actionDiv = document.createElement("div");
+          actionDiv.classList.add("story-actions");
+
+          const btnAconselhar = document.createElement("button");
+          btnAconselhar.textContent = "Aconselhar";
+          btnAconselhar.addEventListener("click", () => {
+            abrirFormularioAconselhar(hist);
+          });
+
+          actionDiv.appendChild(btnAconselhar);
+
+          divItem.appendChild(nameEl);
+          divItem.appendChild(dateEl);
+          divItem.appendChild(previewEl);
+          divItem.appendChild(actionDiv);
+
+          listaNaoAconselhadas.appendChild(divItem);
+        });
+
+        // Aconselhadas
+        jaAconselhadas.forEach((hist) => {
+          const divItem = document.createElement("div");
+          divItem.classList.add("story-item");
+
+          const nameEl = document.createElement("div");
+          nameEl.classList.add("story-name");
+          nameEl.textContent = `${hist.nome}`;
+
+          const dateEl = document.createElement("div");
+          dateEl.classList.add("story-date");
+          dateEl.textContent = `Enviado em: ${hist.dataEhHora}`;
+
+          const previewEl = document.createElement("div");
+          previewEl.classList.add("story-preview");
+          const previewText =
+            hist.historia.length > 60
+              ? hist.historia.substring(0, 60) + "..."
+              : hist.historia;
+          previewEl.textContent = previewText;
+
+          const respEl = document.createElement("div");
+          respEl.style.marginTop = "5px";
+          respEl.innerHTML = `<strong>Conselho dado:</strong> ${hist.resposta}`;
+
+          divItem.appendChild(nameEl);
+          divItem.appendChild(dateEl);
+          divItem.appendChild(previewEl);
+          divItem.appendChild(respEl);
+
+          listaJaAconselhadas.appendChild(divItem);
+        });
+      }
+
+      function abrirFormularioAconselhar(historia) {
+        nikkiAconselharContainer.style.display = "block";
+        cardAconselhamento.innerHTML = "";
+
+        const fullStory = document.createElement("div");
+        fullStory.style.marginBottom = "10px";
+        fullStory.innerHTML = `
+        <h4>História completa de ${historia.nome}:</h4>
+        <p style="white-space: pre-wrap; color:#444;">${historia.historia}</p>
+      `;
+
+        const inputResposta = document.createElement("textarea");
+        inputResposta.rows = 4;
+        inputResposta.style.width = "100%";
+        inputResposta.style.marginTop = "10px";
+        inputResposta.placeholder = "Escreva seu conselho aqui...";
+
+        const btnSalvar = document.createElement("button");
+        btnSalvar.textContent = "Salvar Conselho";
+        btnSalvar.style.marginTop = "10px";
+
+        btnSalvar.addEventListener("click", () => {
+          const respostaNikki = inputResposta.value.trim();
+          if (!respostaNikki) {
+            alert("Escreva algo antes de salvar.");
+            return;
+          }
+          salvarConselhoNikki(historia, respostaNikki);
+          nikkiAconselharContainer.style.display = "none";
+        });
+
+        cardAconselhamento.appendChild(fullStory);
+        cardAconselhamento.appendChild(inputResposta);
+        cardAconselhamento.appendChild(btnSalvar);
+      }
+
+      function salvarConselhoNikki(historia, resposta) {
+        const historias = getHistorias();
+        const index = historias.findIndex(
+          (h) =>
+            h.nome === historia.nome &&
+            h.historia === historia.historia &&
+            h.dataEhHora === historia.dataEhHora
+        );
+        if (index >= 0) {
+          historias[index].foiRespondido = true;
+          historias[index].resposta = resposta;
+        }
+        salvarHistorias(historias);
+        mostrarListaHistoriasNikki();
+        alert("Conselho salvo com sucesso!");
+      }
+
+      // -------------------------------------------------
+      // EVENTOS DE BOTÕES - VISITANTE
+      // -------------------------------------------------
+      btnPedirConselho.addEventListener("click", () => {
+        btnPedirConselho.style.display = "none";
+        btnSouNikki.style.display = "none";
+
+        conselhoForm.style.display = "block";
+        nikkiForm.style.display = "none";
+        historiaForm.style.display = "none";
+      });
+
+      btnConfirmarNome.addEventListener("click", () => {
+        const nome = nomeConselhoInput.value.trim();
+        if (!nome) {
+          alert("Por favor, insira seu nome antes de continuar.");
+          return;
+        }
+        visitorLogin(nome);
+      });
+
+      btnEnviarHistoria.addEventListener("click", () => {
+        const nome = nomeConselhoInput.value.trim();
+        const historia = historiaTextarea.value.trim();
+
+        if (!nome || !historia) {
+          alert("Por favor, preencha todos os campos.");
+          return;
+        }
+
+        const dataEhHora = new Date().toLocaleString("pt-BR");
+        const historias = getHistorias();
+
+        historias.push({
+          nome,
+          historia,
+          dataEhHora,
+          foiRespondido: false,
+          resposta: "",
+        });
+        salvarHistorias(historias);
+
+        historiaTextarea.value = "";
+        alert("História enviada com sucesso!");
+
+        mostrarHistoriasVisitante(nome);
+      });
+
+      btnPedirNovoConselho.addEventListener("click", () => {
+        visitanteHistoriasContainer.style.display = "none";
+        historiaForm.style.display = "block";
+      });
+
+      // Botões "Voltar ao Login" do visitante
+      function resetVisitanteUI() {
+        conselhoForm.style.display = "none";
+        historiaForm.style.display = "none";
+        visitanteHistoriasContainer.style.display = "none";
+        nomeConselhoInput.value = "";
+        historiaTextarea.value = "";
+      }
+
+      btnVoltarVisitante.addEventListener("click", () => {
+        resetVisitanteUI();
+        loginContainer.style.display = "block";
+        btnPedirConselho.style.display = "inline-block";
+        btnSouNikki.style.display = "inline-block";
+      });
+
+      btnVoltarVisitante2.addEventListener("click", () => {
+        resetVisitanteUI();
+        loginContainer.style.display = "block";
+        btnPedirConselho.style.display = "inline-block";
+        btnSouNikki.style.display = "inline-block";
+      });
+
+      // -------------------------------------------------
+      // EVENTOS DE BOTÕES - NIKKI
+      // -------------------------------------------------
+      btnSouNikki.addEventListener("click", () => {
+        btnPedirConselho.style.display = "none";
+        btnSouNikki.style.display = "none";
+
+        nikkiForm.style.display = "block";
+        conselhoForm.style.display = "none";
+        historiaForm.style.display = "none";
+      });
+
+      btnConfirmarNikki.addEventListener("click", () => {
+        const senha = senhaNikkiInput.value;
+        if (senha === "diva") {
+          erroNikki.style.display = "none";
+          nikkiForm.style.display = "none";
+          loginContainer.style.display = "none";
+
+          listaHistoriasContainer.style.display = "block";
+          mostrarListaHistoriasNikki();
+        } else {
+          erroNikki.style.display = "block";
+        }
+      });
+
+      btnVoltarNikki.addEventListener("click", () => {
+        nikkiForm.style.display = "none";
+        senhaNikkiInput.value = "";
+        erroNikki.style.display = "none";
+
+        loginContainer.style.display = "block";
+        btnPedirConselho.style.display = "inline-block";
+        btnSouNikki.style.display = "inline-block";
+      });
+
+      btnSair.addEventListener("click", () => {
+        listaHistoriasContainer.style.display = "none";
+        nikkiAconselharContainer.style.display = "none";
+
+        loginContainer.style.display = "block";
+        btnPedirConselho.style.display = "inline-block";
+        btnSouNikki.style.display = "inline-block";
+
+        senhaNikkiInput.value = "";
+        erroNikki.style.display = "none";
+      });
+    </script>
+  </body>
+</html>
